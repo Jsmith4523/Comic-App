@@ -69,9 +69,7 @@ extension URLSession {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let comic = try decoder.decode(Comic.self, from: data)
+                let comic = try JSONDecoder().decode(Comic.self, from: data)
                 completion(.success(comic))
             } catch {
                 completion(.failure(ComicManagerError.decodingError))

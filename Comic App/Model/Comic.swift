@@ -7,19 +7,21 @@
 
 import Foundation
 
-struct Comic: Codable {
+struct Comic: Identifiable, Codable {
+    
+    var id: Int { self.num }
     
     let alt: String
-    let day: Int
+    let day: String
     let img: String
     let link: String
-    let month: Int
+    let month: String
     let news: String
     let num: Int
-    //let safe_title: String
+    let safe_title: String
     let title: String
-    //let transcript: String
-    let year: Int
+    let transcript: String
+    let year: String
 }
 
 extension Comic {

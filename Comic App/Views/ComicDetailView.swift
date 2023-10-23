@@ -30,13 +30,22 @@ struct ComicDetailView: View {
                         Image(uiImage: comicImage)
                             .resizable()
                             .scaledToFit()
+                    } else {
+                        ZStack(alignment: .center) {
+                            Color(uiColor: .opaqueSeparator)
+                            ProgressView()
+                        }
+                        .frame(height: 200)
                     }
-//                    VStack {
-//                        Text(comic.transcript)
-//                            .font(.system(size: 17))
-//                    }
-//                    .multilineTextAlignment(.leading)
-//                    .padding()
+                    HStack {
+                        VStack {
+                            Text(comic.transcript)
+                                .font(.system(size: 20).bold())
+                        }
+                        Spacer()
+                    }
+                    .multilineTextAlignment(.leading)
+                    .padding()
                 }
             }
             .presentationDragIndicator(.visible)

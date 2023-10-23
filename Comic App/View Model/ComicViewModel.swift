@@ -7,8 +7,10 @@
 
 import Foundation
 
+@MainActor
 final class ComicViewModel: ObservableObject {
     
+    @Published var showComicFetchError = false
     @Published var number: Int = 1
     @Published var comic: Comic!
     
@@ -24,23 +26,29 @@ final class ComicViewModel: ObservableObject {
         }
         
         func fetchTodaysComic() {
+            self.number = 1
+            
             comicManager.fetchTodaysComic { [weak self] result in
-                switch result {
-                case .success(let comic):
-                    self?.comic = comic
-                case .failure(let error):
-                    print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let comic):
+                        self?.comic = comic
+                    case .failure(_):
+                        self?.showComicFetchError.toggle()
+                    }
                 }
             }
         }
         
         func fetchValidComic() {
             comicManager.fetchComicByNumber(number) { [weak self] result in
-                switch result {
-                case .success(let comic):
-                    self?.comic = comic
-                case .failure(let error):
-                    print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let comic):
+                        self?.comic = comic
+                    case .failure(_):
+                        self?.showComicFetchError.toggle()
+                    }
                 }
             }
         }
